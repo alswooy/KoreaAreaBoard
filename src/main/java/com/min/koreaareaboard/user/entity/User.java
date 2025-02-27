@@ -1,11 +1,18 @@
 package com.min.koreaareaboard.user.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.min.koreaareaboard.user.dto.OAuthType;
 import com.min.koreaareaboard.user.dto.UserRole;
 import com.min.koreaareaboard.utill.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.processing.Pattern;
 
 @Entity
 @Table(name = "user")
@@ -17,12 +24,34 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = false)
 public class User extends BaseEntity {
     @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private UserRole userRole;
+    @Column(name = "user_role", nullable = false)
+    @Builder.Default
+    private UserRole userRole = UserRole.USER;
 
+    @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(name = "password", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    @ColumnDefault("0")
+    @Column(nullable = false, name = "passwordLock")
+    private int passwordLock; // 5회 이상 락
+
+    @Column(name = "nickname", nullable = false)
     private String nickname;
-    private String profile_image;
+
+    @Column(name = "profile_image_url")
+    private String profileImageUrl;
+
+    @Column(name = "oauth_type") // OAuth 제공자 (ex: google, kakao, naver)
+    private OAuthType oAuthType;
+
+    @Column(name = "oauth_id")
+    private String oAuthId; // OAuth ID
 }
