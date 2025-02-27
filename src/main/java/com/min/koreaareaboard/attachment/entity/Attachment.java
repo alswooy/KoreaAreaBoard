@@ -1,6 +1,6 @@
 package com.min.koreaareaboard.attachment.entity;
 
-import com.min.koreaareaboard.utill.BaseEntity;
+import com.min.koreaareaboard.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,7 +1,7 @@
 package com.min.koreaareaboard.category.entity;
 
-import com.min.koreaareaboard.category.CategoryType;
-import com.min.koreaareaboard.utill.BaseEntity;
+import com.min.koreaareaboard.category.enums.CategoryType;
+import com.min.koreaareaboard.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

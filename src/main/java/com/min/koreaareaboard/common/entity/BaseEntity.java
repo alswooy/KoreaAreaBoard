@@ -1,4 +1,4 @@
-package com.min.koreaareaboard.utill;
+package com.min.koreaareaboard.common.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

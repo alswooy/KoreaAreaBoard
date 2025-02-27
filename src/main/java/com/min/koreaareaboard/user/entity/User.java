@@ -1,18 +1,23 @@
 package com.min.koreaareaboard.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.min.koreaareaboard.user.dto.OAuthType;
-import com.min.koreaareaboard.user.dto.UserRole;
-import com.min.koreaareaboard.utill.BaseEntity;
+import com.min.koreaareaboard.common.entity.BaseEntity;
+import com.min.koreaareaboard.user.enums.OAuthType;
+import com.min.koreaareaboard.user.enums.UserRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.processing.Pattern;
 
 @Entity
 @Table(name = "user")

@@ -1,4 +1,4 @@
-package com.min.koreaareaboard.utill;
+package com.min.koreaareaboard.common.enums;
 
 public enum CommonStatus {
     DELETE("삭제"), PUBLIC("공개"), PRIVATE("비공개");

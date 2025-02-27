@@ -1,4 +1,4 @@
-package com.min.koreaareaboard.user.dto;
+package com.min.koreaareaboard.user.enums;
 
 public enum UserRole {
     USER("사용자"), ADMIN("관리자");

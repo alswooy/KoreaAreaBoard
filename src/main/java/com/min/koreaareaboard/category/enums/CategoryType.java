@@ -1,4 +1,4 @@
-package com.min.koreaareaboard.category;
+package com.min.koreaareaboard.category.enums;
 
 public enum CategoryType {
     // **특별시 (Special City)**

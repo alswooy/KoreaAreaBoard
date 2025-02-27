@@ -3,7 +3,7 @@ package com.min.koreaareaboard.like.entity;
 import com.min.koreaareaboard.board.entity.Board;
 import com.min.koreaareaboard.comment.entity.Comment;
 import com.min.koreaareaboard.user.entity.User;
-import com.min.koreaareaboard.utill.BaseEntity;
+import com.min.koreaareaboard.common.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
