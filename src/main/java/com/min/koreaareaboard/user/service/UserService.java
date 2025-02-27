@@ -30,4 +30,21 @@ public class UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username);
     }
+    //비밀번호 찾기(비밀번호 수정)
+    public void userPasswordUpdate(){
+
+    }
+    //닉네임 수정
+    public void userNicknameUpdate(){
+    }
+    //핸드폰번호 수정
+    public void phoneNumberUpdate(){
+    }
+    //아이디 찾기
+    public void findUserId(){
+    }
+    //사용자 탈퇴(상태 수정)
+    public void userStatysUpdate(){
+    }
+
 }
