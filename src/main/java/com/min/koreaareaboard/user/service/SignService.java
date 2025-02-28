@@ -78,10 +78,5 @@ public class SignService {
     return  new SignInResultDto(signInResultDto.getToken(),
         CommonResponse.SUCCESS.getMessage(), true,
         CommonResponse.SUCCESS.getCode());
-
   }
-
-
-
-
 }

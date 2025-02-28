@@ -2,6 +2,7 @@ package com.min.koreaareaboard.user.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.min.koreaareaboard.common.entity.BaseEntity;
+import com.min.koreaareaboard.common.enums.CommonStatus;
 import com.min.koreaareaboard.user.enums.OAuthType;
 import com.min.koreaareaboard.user.enums.UserRole;
 import jakarta.persistence.Column;
@@ -69,6 +70,8 @@ public class User extends BaseEntity implements UserDetails{
     @Column(name = "oauth_id")
     private String oAuthId; // OAuth ID
 
+    @Column(name = "status", nullable = false)
+    private CommonStatus status = CommonStatus.PUBLIC;
 
 
 
