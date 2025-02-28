@@ -1,5 +1,6 @@
 package com.min.koreaareaboard.user.service;
 
+import com.min.koreaareaboard.common.enums.CommonStatus;
 import com.min.koreaareaboard.user.entity.UserDetails;
 import com.min.koreaareaboard.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -30,21 +31,26 @@ public class UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username);
     }
-    //비밀번호 찾기(비밀번호 수정)
-    public void userPasswordUpdate(){
 
+    //비밀번호 찾기(비밀번호 수정)
+    public void userPasswordUpdate(String email, String password){
+        userRepository.save(
+            userRepository.findByEmail(email)
+                .toBuilder().password(password).build());
     }
+
     //닉네임 수정
-    public void userNicknameUpdate(){
+    public void userNicknameUpdate(String email, String nickname){
+        userRepository.save(
+            userRepository.findByEmail(email)
+                .toBuilder().nickname(nickname).build());
     }
-    //핸드폰번호 수정
-    public void phoneNumberUpdate(){
-    }
-    //아이디 찾기
-    public void findUserId(){
-    }
+
     //사용자 탈퇴(상태 수정)
-    public void userStatysUpdate(){
+    public void userStatusUpdate(String email){
+        userRepository.save(
+            userRepository.findByEmail(email)
+                .toBuilder().status(CommonStatus.DELETE).build());
     }
 
 }
