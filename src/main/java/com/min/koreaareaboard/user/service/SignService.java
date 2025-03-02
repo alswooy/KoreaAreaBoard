@@ -1,6 +1,8 @@
 package com.min.koreaareaboard.user.service;
 
 import com.min.koreaareaboard.common.JwtTokenProvider;
+import com.min.koreaareaboard.user.dto.request.JoinRequestDto;
+import com.min.koreaareaboard.user.dto.request.LoginRequestDto;
 import com.min.koreaareaboard.user.dto.response.SignInResultDto;
 import com.min.koreaareaboard.user.dto.response.SignUpResultDto;
 import com.min.koreaareaboard.user.entity.User;
@@ -34,20 +36,20 @@ public class SignService {
   }
 
   @Transactional
-  public SignUpResultDto signUp(String email, String password, String nickname, String role) {
-    Optional<User> existingUser = Optional.ofNullable(userRepository.findByEmail(email));
+  public SignUpResultDto signUp(JoinRequestDto join) {
+    Optional<User> existingUser = Optional.ofNullable(userRepository.findByEmail(join.getEmail()));
     if (existingUser.isPresent()) {
       throw new IllegalStateException("이미 존재하는 회원입니다.");
     }
 
-    List<UserRole> userRole = role.equalsIgnoreCase("ADMIN")
+    List<UserRole> userRole = join.getRole().equalsIgnoreCase("ADMIN")
         ? Arrays.asList(UserRole.ADMIN, UserRole.USER)
         : Collections.singletonList(UserRole.USER);
 
     User user = User.builder()
-        .email(email)
-        .password(passwordEncoder.encode(password))
-        .nickname(nickname)
+        .email(join.getEmail())
+        .password(passwordEncoder.encode(join.getPassword()))
+        .nickname(join.getNickname())
         .userRole(userRole)
         .build();
 
@@ -58,12 +60,12 @@ public class SignService {
     return new SignUpResultDto(success, response.getCode(), response.getMessage());
   }
 
-  public SignInResultDto signIn(String email, String password) {
-    User user = userRepository.findByEmail(email);
+  public SignInResultDto signIn(LoginRequestDto login) {
+    User user = userRepository.findByEmail(login.getEmail());
     if(user == null) {
       throw new IllegalStateException("존재하지 않는 회원입니다.");
     }
-    if(!passwordEncoder.matches(password, user.getPassword())) {
+    if(!passwordEncoder.matches(login.getPassword(), user.getPassword())) {
       throw new IllegalStateException("비밀번호가 일치하지 않습니다.");
     }
     SignInResultDto signInResultDto = null;

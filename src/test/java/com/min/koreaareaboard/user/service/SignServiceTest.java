@@ -2,6 +2,8 @@ package com.min.koreaareaboard.user.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.min.koreaareaboard.user.dto.request.JoinRequestDto;
+import com.min.koreaareaboard.user.dto.request.LoginRequestDto;
 import com.min.koreaareaboard.user.dto.response.SignInResultDto;
 import com.min.koreaareaboard.user.dto.response.SignUpResultDto;
 import com.min.koreaareaboard.user.entity.User;
@@ -38,33 +40,50 @@ class SignServiceTest {
 
   @Test
   void signUp() {
-    SignUpResultDto result = signService.signUp(testUser.getEmail(),
-        testUser.getPassword(),
-        testUser.getNickname(),
-        testUser.getUserRole().get(1).name());
+    SignUpResultDto result = signService.signUp(JoinRequestDto.builder()
+        .email(testUser.getEmail())
+        .password(testUser.getPassword())
+        .nickname(testUser.getNickname())
+        .role(testUser.getUserRole().get(1).name())
+        .build());
 
     assertTrue(result.isSuccess());
     assertEquals("SUCCESS", result.getMsg());
   }
   @Test
   void signUpWithExistingEmail() {
-    signService.signUp(testUser.getEmail(), testUser.getPassword(), testUser.getNickname(), testUser.getUserRole().get(1).name());
+    signService.signUp(JoinRequestDto.builder()
+        .email(testUser.getEmail())
+        .password(testUser.getPassword())
+        .nickname(testUser.getNickname())
+        .role(testUser.getUserRole().get(1).name())
+        .build());
     IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
-      signService.signUp(testUser.getEmail(), testUser.getPassword(), testUser.getNickname(), testUser.getUserRole().get(1).name());
+      signService.signUp(JoinRequestDto.builder()
+          .email(testUser.getEmail())
+          .password(testUser.getPassword())
+          .nickname(testUser.getNickname())
+          .role(testUser.getUserRole().get(1).name())
+          .build());
     });
     assertEquals("이미 존재하는 회원입니다.", exception.getMessage());
   }
 
   @Test
   void signIn() {
-    SignUpResultDto result = signService.signUp(testUser.getEmail(),
-        testUser.getPassword(),
-        testUser.getNickname(),
-        testUser.getUserRole().get(1).name());
+    SignUpResultDto result = signService.signUp(JoinRequestDto.builder()
+        .email(testUser.getEmail())
+        .password(testUser.getPassword())
+        .nickname(testUser.getNickname())
+        .role(testUser.getUserRole().get(1).name())
+        .build());
     assertTrue(result.isSuccess());
     assertEquals("SUCCESS", result.getMsg());
     SignInResultDto signInResult = signService.signIn(
-        testUser.getEmail(), testUser.getPassword());
+        LoginRequestDto.builder()
+            .email(testUser.getEmail())
+            .password(testUser.getPassword())
+            .build());
     assertTrue(signInResult.isSuccess());
     assertEquals("SUCCESS", signInResult.getMsg());
     assertNotNull(signInResult.getToken());
@@ -73,26 +92,37 @@ class SignServiceTest {
 
   @Test
   void signInTooEmail(){
-    SignUpResultDto result = signService.signUp(testUser.getEmail(),
-        testUser.getPassword(),
-        testUser.getNickname(),
-        testUser.getUserRole().get(1).name());
+    SignUpResultDto result = signService.signUp(JoinRequestDto.builder()
+        .email(testUser.getEmail())
+        .password(testUser.getPassword())
+        .nickname(testUser.getNickname())
+        .role(testUser.getUserRole().get(1).name())
+        .build());
     assertTrue(result.isSuccess());
     assertEquals("SUCCESS", result.getMsg());
     IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
-          signService.signUp(testUser.getEmail(),
-              testUser.getPassword(),
-              testUser.getNickname(),
-              testUser.getUserRole().get(1).name());
+          signService.signUp(JoinRequestDto.builder()
+              .email(testUser.getEmail())
+              .password(testUser.getPassword())
+              .nickname(testUser.getNickname())
+              .role(testUser.getUserRole().get(1).name()).build());
         });
       assertEquals("이미 존재하는 회원입니다.", exception.getMessage());
   }
 
   @Test
   void signInWithWrongPassword() {
-    signService.signUp(testUser.getEmail(), testUser.getPassword(), testUser.getNickname(), testUser.getUserRole().get(1).name());
+    signService.signUp(JoinRequestDto.builder()
+        .email(testUser.getEmail())
+        .password(testUser.getPassword())
+        .nickname(testUser.getNickname())
+        .role(testUser.getUserRole().get(1).name())
+        .build());
     IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
-      signService.signIn(testUser.getEmail(), "wrongpassword");
+      signService.signIn(LoginRequestDto.builder()
+          .email(testUser.getEmail())
+          .password("wrongpassword")
+          .build());
     });
     assertEquals("비밀번호가 일치하지 않습니다.", exception.getMessage());
   }
@@ -100,7 +130,10 @@ class SignServiceTest {
   @Test
   void signInWithNonExistingEmail() {
     IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
-      signService.signIn("nonexisting@gmail.com", testUser.getPassword());
+      signService.signIn(LoginRequestDto.builder()
+          .email("nonexisting@gmail.com")
+          .password(testUser.getPassword())
+          .build());
     });
     assertEquals("존재하지 않는 회원입니다.", exception.getMessage());
   }
